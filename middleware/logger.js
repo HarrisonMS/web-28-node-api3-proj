@@ -1,10 +1,8 @@
+const logger = (req, res, next) => {
+  console.log(`${req.method} to ${req.originalUrl} at ${new Date()}`);
+  next();
+}
 
-// module.exports = {
-//   logger
-// };
-
-// function logger(){return function(req, res, next){
-//   if(console.log(`${req.method} to ${req.originalUrl} at ${new Date()}`)){
-//     return next()
-//   }
-// }} 
+module.exports = {
+  logger : logger
+}

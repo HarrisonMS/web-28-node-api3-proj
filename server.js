@@ -3,12 +3,10 @@ const express = require('express');
 const server = express();
 const morgan = require('morgan')
 const helmet = require("helmet")
+const {logger} = require("./middleware/logger")
 
 //custom middleware
-const logger = (req, res, next) => {
-  console.log(`${req.method} to ${req.originalUrl} at ${new Date()}`);
-  next();
-}
+
 
 server.use(helmet());
 server.use(morgan('tiny'))
