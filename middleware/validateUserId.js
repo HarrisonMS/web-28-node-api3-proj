@@ -1,3 +1,5 @@
+const Users = require('../users/userDb')
+
 function validateUserId(req, res, next) {
   const userId = req.params.id || req.body.user_id;
   Users
@@ -7,11 +9,11 @@ function validateUserId(req, res, next) {
       req.user = user;
     return next()
     } else {
-      easyErr(400, "that is not a valid id", res)
+      res.status(400).json({message:"that is not a valid id"})
     }
   })
   .catch(() => {
-    easyErr(500, "cant find that user in our data", res)
+    res.status(400).json({message:"cant fetch user from db"})
   })
 }
 
