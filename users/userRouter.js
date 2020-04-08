@@ -2,10 +2,11 @@ const express = require('express');
 const Users = require("./userDb")
 const router = express.Router();
 const { validateUserId } = require('../middleware/validateUserId')
+const { validateUser } = require('../middleware/validateUser')
 
 
 
-router.post('/', (req, res) => {
+router.post('/', validateUser (req, res) => {
   // do your magic!
 });
 
