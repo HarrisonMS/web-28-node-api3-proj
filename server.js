@@ -12,7 +12,7 @@ const userRoutes = require('./users/userRouter')
 server.use(helmet());
 server.use(morgan('tiny'))
 server.use(logger)
-
+server.use(express.json());
 
 server.use("/api/users", userRoutes)
 

@@ -6,7 +6,15 @@ const { validateUser } = require('../middleware/validateUser')
 
 
 
-router.post('/', validateUser (req, res) => {
+router.post('/', validateUser, (req, res) => {
+  const userData = req.body
+  Users.insert(userData)
+  .then(user => {
+    res.status(201).json(user);
+  })
+  .catch(() => {
+    res.status(500).json({message: 'unable to create and add a user to the database at the moment shrug'})
+  })
   // do your magic!
 });
 
