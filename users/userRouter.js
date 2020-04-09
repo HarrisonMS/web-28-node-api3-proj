@@ -40,21 +40,41 @@ router.get('/', checkRole('admin'),  (req, res) => {
   })
   // do your magic!
 });
-
-router.get('/:id', validateUserId, (req, res) => {
+router.get('/:id',validateUserId, (req, res) => {
   res.status(200).json(req.user);
-  // do your magic!
 });
 
-router.get('/:id/posts', (req, res) => {
-  // do your magic!
+router.get('/:id/posts',validateUserId, (req, res) => {
+  Users
+  .getUserPosts(req.user.id)
+  .then(posts => {
+    res.status(200).json(posts)
+  })
+  .catch(() => {
+    easyErr(500, "cant get this users post from the data base", res)
+  })
 });
 
-router.delete('/:id', (req, res) => {
-  // do your magic!
+router.delete('/:id',  validateUserId, (req, res) => {
+  Users.remove(req.params.id)
+  .then(removed => {
+    res.status(200).json(`message: you just killed ${removed} user mourn them you animal`)
+  })
+  .catch((error) => {
+    res.status.json(error)
+  })
 });
 
-router.put('/:id', (req, res) => {
-  // do your magic!
+router.put('/:id', validateUserId, validateUser, (req, res) => {
+  id = req.params.id
+  changed = req.body
+  Users.update(id, changed)
+  .then(post => {
+    res.status(200).json(post)
+  })
+  .catch((error) => {
+    res.status.json(error)
+  })
+
 });
 module.exports = router;
