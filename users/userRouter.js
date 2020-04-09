@@ -1,9 +1,11 @@
 const express = require('express');
 const Users = require("./userDb")
+const Posts = require('../posts/postDb')
 const router = express.Router();
 const { validateUserId } = require('../middleware/validateUserId')
 const { validateUser } = require('../middleware/validateUser')
-
+const { checkRole } = require('../middleware/checkRole')
+const { validatePost } = require('../middleware/validatePost')
 
 
 router.post('/', validateUser, (req, res) => {
@@ -18,11 +20,24 @@ router.post('/', validateUser, (req, res) => {
   // do your magic!
 });
 
-router.post('/:id/posts', (req, res) => {
-  // do your magic!
+router.post('/:id/posts', validateUserId, validatePost, (req, res) => {
+  Posts
+  .insert(req.body)
+  .then(post => {
+    res.status(201).json(post)
+  })
+  .catch((error) => {
+    res.status(500).json({error})
+  })
 });
 
-router.get('/', (req, res) => {
+router.get('/', checkRole('admin'),  (req, res) => {
+  Users.get().then(users => {
+    res.status(200).json(users)
+  })
+  .catch((error) => {
+    res.status(500).json(error)
+  })
   // do your magic!
 });
 
@@ -42,19 +57,4 @@ router.delete('/:id', (req, res) => {
 router.put('/:id', (req, res) => {
   // do your magic!
 });
-
-//custom middleware
-
-// function validateUserId(req, res, next) {
-//   // do your magic!
-// }
-
-// function validateUser(req, res, next) {
-//   // do your magic!
-// }
-
-// function validatePost(req, res, next) {
-//   // do your magic!
-// }
-
 module.exports = router;
