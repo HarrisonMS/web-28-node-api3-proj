@@ -41,9 +41,15 @@ router.get('/', checkRole('admin'),  (req, res) => {
   // do your magic!
 });
 
-router.get('/:id', validateUserId, (req, res) => {
-  res.status(200).json(req.user);
-  // do your magic!
+router.get('/:id/posts',validateUserId, (req, res) => {
+  Users
+  .getUserPosts(req.user.id)
+  .then(posts => {
+    res.status(200).json(posts)
+  })
+  .catch(() => {
+    easyErr(500, "cant get this users post from the data base", res)
+  })
 });
 
 router.get('/:id/posts', (req, res) => {
