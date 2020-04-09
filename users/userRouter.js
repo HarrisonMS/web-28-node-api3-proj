@@ -40,7 +40,6 @@ router.get('/', checkRole('admin'),  (req, res) => {
   })
   // do your magic!
 });
-
 router.get('/:id',validateUserId, (req, res) => {
   res.status(200).json(req.user);
 });
@@ -60,7 +59,16 @@ router.delete('/:id', (req, res) => {
   // do your magic!
 });
 
-router.put('/:id', (req, res) => {
-  // do your magic!
+router.put('/:id', validateUserId, validateUser, (req, res) => {
+  id = req.params.id
+  changed = req.body
+  Users.update(id, changed)
+  .then(post => {
+    res.status(200).json(post)
+  })
+  .catch((error) => {
+    res.status.json(error)
+  })
+
 });
 module.exports = router;
