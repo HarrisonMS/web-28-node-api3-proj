@@ -55,8 +55,14 @@ router.get('/:id/posts',validateUserId, (req, res) => {
   })
 });
 
-router.delete('/:id', (req, res) => {
-  // do your magic!
+router.delete('/:id',  validateUserId, (req, res) => {
+  Users.remove(req.params.id)
+  .then(removed => {
+    res.status(200).json(`message: you just killed ${removed} user mourn them you animal`)
+  })
+  .catch((error) => {
+    res.status.json(error)
+  })
 });
 
 router.put('/:id', validateUserId, validateUser, (req, res) => {
