@@ -3,13 +3,14 @@ const express = require('express');
 const server = express();
 const morgan = require('morgan')
 const helmet = require("helmet")
+const cors = require('cors')
 const { logger } = require("./middleware/logger")
 const userRoutes = require('./users/userRouter')
 const postRoutes = require('./posts/postRouter')
 
 //custom middleware
 
-
+server.use(cors())
 server.use(helmet());
 server.use(morgan('tiny'))
 server.use(logger)
