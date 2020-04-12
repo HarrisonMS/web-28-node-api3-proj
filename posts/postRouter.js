@@ -10,18 +10,21 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-  const postId = req.params.id || req.body.user_id;
+  const postId = req.params.id || req.body.post_id;
   Posts.getById(postId).then(post => {
     res.status(201).json(post)
   })
   .catch((error) => {
     res.status.json(error)
   })
-  // do your magic!
+  
 });
 
 router.delete('/:id', (req, res) => {
-  // do your magic!
+  const postId = req.params.id || req.body.post_id
+  Posts.remove(postId).then(removed => {
+    res.status(200).json(`message: you just killed ${removed} post mourn them you animal`)
+  })
 });
 
 router.put('/:id', (req, res) => {
