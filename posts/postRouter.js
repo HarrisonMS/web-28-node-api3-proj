@@ -23,7 +23,7 @@ router.get('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   const postId = req.params.id || req.body.post_id
   Posts.remove(postId).then(removed => {
-    res.status(200).json(`message: you just killed ${removed} post mourn them you animal`)
+    res.status(200).json(`message: you just killed ${removed} post dmourn them you animal`)
   })
 });
 
